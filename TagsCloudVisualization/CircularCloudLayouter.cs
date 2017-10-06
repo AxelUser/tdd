@@ -12,6 +12,9 @@ namespace TagsCloudVisualization
         public Point Center { get; }
         public Rectangle Maze { get; }
 
+        public List<Rectangle> Rectangles { get; }
+
+
         public CircularCloudLayouter(Point center)
         {
             if (center.X < 0 || center.Y < 0)
@@ -20,6 +23,7 @@ namespace TagsCloudVisualization
             }
             Center = center;
             Maze = CreateMaze(center);
+            Rectangles = new List<Rectangle>();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
