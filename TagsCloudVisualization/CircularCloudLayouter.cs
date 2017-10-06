@@ -28,7 +28,9 @@ namespace TagsCloudVisualization
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            return Rectangle.Empty;
+            var newRectangle = new Rectangle(Center, rectangleSize);
+            Rectangles.Add(newRectangle);
+            return newRectangle;
         }
 
         private Rectangle CreateMaze(Point center)
