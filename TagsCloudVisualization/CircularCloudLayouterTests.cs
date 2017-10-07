@@ -68,5 +68,16 @@ namespace TagsCloudVisualization
             var rectSize = new Size(250, 250);
             Assert.Throws<ArgumentException>(() => cloud.PutNextRectangle(rectSize));
         }
+
+        [Test]
+        public void PutNextRectangle_AddToRectangles_MustNotCollide()
+        {
+            var cloud = CreateCircularCloudLayouter(250, 250);
+            var rectSize = new Size(100, 50);
+            var first = cloud.PutNextRectangle(rectSize);
+            var sec = cloud.PutNextRectangle(rectSize);
+
+            Assert.IsFalse(first.IntersectsWith(sec), "Rectangles must not overlap");
+        }
     }
 }

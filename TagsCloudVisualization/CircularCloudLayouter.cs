@@ -32,8 +32,13 @@ namespace TagsCloudVisualization
             {
                 throw new ArgumentException("Size is too big to fit maze", nameof(rectangleSize));
             }
-            var newRectangle = new Rectangle(Center, rectangleSize);
-            Rectangles.Add(newRectangle);
+
+            var newRectangle = FindPlace(rectangleSize);
+            if (newRectangle != Rectangle.Empty)
+            {
+                Rectangles.Add(newRectangle);
+            }
+
             return newRectangle;
         }
 
@@ -42,6 +47,42 @@ namespace TagsCloudVisualization
             int height = center.Y * 2;
             int width = center.X * 2;
             return new Rectangle(0, 0, width, height);
+        }
+
+        private Rectangle FindPlace(Size rectangleSize)
+        {
+            bool hasSpace = true;
+            int radius = 0;
+            while (hasSpace)
+            {
+                for (int a = 0; a < 360; a++)
+                {
+                    var point = GetCoordinates(Center, a, radius);
+                    if (Maze.Contains(point) && !Rectangles.ContainsPoint(point))
+                    {
+                        var newRect = new Rectangle(point, rectangleSize);
+                        if (!Rectangles.IntersectsWith(newRect))
+                        {
+                            return newRect;
+                        }
+                    }
+                }
+                hasSpace = radius < Maze.Height || radius < Maze.Width;
+                if (hasSpace)
+                {
+                    radius++;
+                }  
+            }
+            return Rectangle.Empty;
+        }
+
+        private Point GetCoordinates(Point center, int angle, int radius)
+        {
+            return new Point
+            {
+                X = (int) Math.Round(center.X + radius * Math.Cos(angle)),
+                Y = (int) Math.Round(center.Y + radius * Math.Sin(angle))
+            };
         }
     }
 }
