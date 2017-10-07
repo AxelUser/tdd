@@ -28,6 +28,10 @@ namespace TagsCloudVisualization
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
+            if (rectangleSize.Width > Maze.Width || rectangleSize.Height > Maze.Height)
+            {
+                throw new ArgumentException("Size is too big to fit maze", nameof(rectangleSize));
+            }
             var newRectangle = new Rectangle(Center, rectangleSize);
             Rectangles.Add(newRectangle);
             return newRectangle;

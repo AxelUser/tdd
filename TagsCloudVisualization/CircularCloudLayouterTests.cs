@@ -60,5 +60,13 @@ namespace TagsCloudVisualization
             var rect = cloud.PutNextRectangle(rectSize);
             Assert.AreEqual(rect, cloud.Rectangles.First());
         }
+
+        [Test]
+        public void PutNextRectangle_AddBigRectangle_ThrowsException()
+        {
+            var cloud = CreateCircularCloudLayouter(50, 50);
+            var rectSize = new Size(250, 250);
+            Assert.Throws<ArgumentException>(() => cloud.PutNextRectangle(rectSize));
+        }
     }
 }
