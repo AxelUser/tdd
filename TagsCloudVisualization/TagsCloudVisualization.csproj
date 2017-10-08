@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouterTests.cs" />
+    <Compile Include="MazeVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleListExtensions.cs" />
   </ItemGroup>

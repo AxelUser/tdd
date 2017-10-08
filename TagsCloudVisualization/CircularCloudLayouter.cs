@@ -61,7 +61,7 @@ namespace TagsCloudVisualization
                     if (Maze.Contains(point) && !Rectangles.ContainsPoint(point))
                     {
                         var newRect = new Rectangle(point, rectangleSize);
-                        if (!Rectangles.IntersectsWith(newRect))
+                        if (Maze.Contains(newRect) && !Rectangles.IntersectsWith(newRect))
                         {
                             return newRect;
                         }
