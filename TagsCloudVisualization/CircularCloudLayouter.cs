@@ -10,10 +10,10 @@ namespace TagsCloudVisualization
     public class CircularCloudLayouter
     {
         public Point Center { get; }
+
         public Rectangle Maze { get; }
 
         public List<Rectangle> Rectangles { get; }
-
 
         public CircularCloudLayouter(Point center)
         {
