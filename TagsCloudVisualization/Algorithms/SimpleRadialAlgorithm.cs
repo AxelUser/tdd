@@ -6,15 +6,18 @@ namespace TagsCloudVisualization.Algorithms
 {
     public class SimpleRadialAlgorithm : ILayouterAlgorithm
     {
+        private static Random _rnd = new Random();
+
         public Rectangle FindSpaceForRectangle(ICloudLayouter layouter, Size rectangleSize)
         {
             bool hasSpace = true;
             int radius = 0;
+            int startAngle = _rnd.Next(0, 361);
             while (hasSpace)
             {
-                for (int a = 0; a < 360; a++)
+                for (int angleDelta = 0; angleDelta < 360; angleDelta++)
                 {
-                    var point = GetCoordinates(layouter.Center, a, radius);
+                    var point = GetCoordinates(layouter.Center, startAngle + angleDelta, radius);
                     if (layouter.Maze.Contains(point) && !layouter.Rectangles.ContainsPoint(point))
                     {
                         var newRect = new Rectangle(point, rectangleSize);

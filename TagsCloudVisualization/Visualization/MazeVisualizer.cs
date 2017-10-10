@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.Layouters;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualization
 {
     public static class MazeVisualizer
     {

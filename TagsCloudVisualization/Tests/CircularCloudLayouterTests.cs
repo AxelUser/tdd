@@ -5,6 +5,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.Algorithms;
 using TagsCloudVisualization.Layouters;
+using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization.Tests
 {
@@ -26,7 +27,7 @@ namespace TagsCloudVisualization.Tests
             if (state.Status == TestStatus.Failed && _layouter != null)
             {
                 Utils.SaveImageAsTestSample(TestContext.CurrentContext, TestContext.Out,
-                    MazeVisualizer.GetImage(_layouter), "MazeErrorsSamples");
+                    MazeVisualizer.GetImage(_layouter), _layouter.Rectangles.Count, "MazeErrorsSamples");
             }
         }
 

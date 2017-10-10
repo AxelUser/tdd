@@ -3,6 +3,7 @@ using System.Drawing;
 using NUnit.Framework;
 using TagsCloudVisualization.Algorithms;
 using TagsCloudVisualization.Layouters;
+using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization.Tests
 {
@@ -20,8 +21,8 @@ namespace TagsCloudVisualization.Tests
 
         private static Size GetRandomSize()
         {
-            int width = _rnd.Next(100, 250);
-            int height = _rnd.Next(50, 200);
+            int width = _rnd.Next(50, 200);
+            int height = _rnd.Next(50, 100);
             return new Size(width, height);
         }
 
@@ -29,10 +30,13 @@ namespace TagsCloudVisualization.Tests
         public void TearDown()
         {
             Utils.SaveImageAsTestSample(TestContext.CurrentContext, TestContext.Out, MazeVisualizer.GetImage(_layouter),
-                "MazeSamples");
+                _layouter.Rectangles.Count, "MazeSamples");
         }
 
-
+        [TestCase(80)]
+        [TestCase(70)]
+        [TestCase(60)]
+        [TestCase(40)]
         [TestCase(30)]
         [TestCase(20)]
         [TestCase(10)]
