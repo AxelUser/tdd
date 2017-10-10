@@ -17,7 +17,7 @@ namespace TagsCloudVisualization.Tests
         private CircularCloudLayouter CreateCircularCloudLayouter(int centerX, int centerY)
         {
             var center = new Point(centerX, centerY);
-            return new CircularCloudLayouter(center, new SimpleRadialAlgorithm());
+            return new CircularCloudLayouter(center, new SimpleRadialAlgorithm(false));
         }
 
         [TearDown]
