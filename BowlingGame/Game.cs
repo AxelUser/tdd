@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace BowlingGame
 {
-	public class Game
+    public class Game
 	{
 		public void Roll(int pins)
 		{

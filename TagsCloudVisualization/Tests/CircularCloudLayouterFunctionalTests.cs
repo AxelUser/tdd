@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-using System.IO;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture(Category = "Functional")]
     public class CircularCloudLayouterFunctionalTests
@@ -33,15 +26,8 @@ namespace TagsCloudVisualization
         [TearDown]
         public void TearDown()
         {
-            var filename = $"{Guid.NewGuid():N}.png";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "MazeResults");
-            Directory.CreateDirectory(path);
-            path = Path.Combine(path, filename);
-
-            var testImage = MazeVisualizer.GetImage(_layouter);
-
-            testImage.Save(path, ImageFormat.Png);
-            TestContext.WriteLine($"Test image was saved at {path}");
+            Utils.SaveImageAsTestSample(TestContext.CurrentContext, TestContext.Out, MazeVisualizer.GetImage(_layouter),
+                "MazeSamples");
         }
 
 
@@ -50,10 +36,7 @@ namespace TagsCloudVisualization
         [TestCase(10)]
         public void CreateMaze(int tagsCount)
         {
-            _layouter = new CircularCloudLayouter(new Point(640, 360));
-
-            Size bigTag = new Size(200, 120);
-            Size smallTag = new Size(100, 70);
+            _layouter = new CircularCloudLayouter(new Point(640, 360), new SimpleRadialAlgorithm());
 
             for (int i = 0; i < tagsCount; i++)
             {

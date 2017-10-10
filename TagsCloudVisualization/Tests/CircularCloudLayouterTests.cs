@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture]
     public class CircularCloudLayouterTests
@@ -20,7 +14,7 @@ namespace TagsCloudVisualization
         private CircularCloudLayouter CreateCircularCloudLayouter(int centerX, int centerY)
         {
             var center = new Point(centerX, centerY);
-            return new CircularCloudLayouter(center);
+            return new CircularCloudLayouter(center, new SimpleRadialAlgorithm());
         }
 
         [TearDown]
@@ -29,17 +23,8 @@ namespace TagsCloudVisualization
             var state = TestContext.CurrentContext.Result.Outcome;
             if (state.Status == TestStatus.Failed && _layouter != null)
             {
-                _layouter.Rectangles.ForEach(r=>TestContext.WriteLine($"Rectangle at {r}"));
-
-                var filename = $"{Guid.NewGuid():N}.png";
-                var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "MazeResults");
-                Directory.CreateDirectory(path);
-                path = Path.Combine(path, filename);
-
-                var testImage = MazeVisualizer.GetImage(_layouter);
-
-                testImage.Save(path, ImageFormat.Png);
-                TestContext.WriteLine($"Test image was saved at {path}");
+                Utils.SaveImageAsTestSample(TestContext.CurrentContext, TestContext.Out,
+                    MazeVisualizer.GetImage(_layouter), "MazeErrorsSamples");
             }
         }
 
@@ -47,7 +32,7 @@ namespace TagsCloudVisualization
         public void Ctor_CorrectCenter_CreatesObject()
         {
             var center = new Point(8, 10);
-            var cloud = new CircularCloudLayouter(center);
+            var cloud = new CircularCloudLayouter(center, new SimpleRadialAlgorithm());
             Assert.AreEqual(cloud.Center, center);
         }
 
@@ -107,14 +92,13 @@ namespace TagsCloudVisualization
         }
 
         [Test]
-        public void PutNextRectangle_TooMuchRectangles_DonNotAddAdd()
+        public void PutNextRectangle_TooMuchRectangles_DoNotAdd()
         {
             _layouter = CreateCircularCloudLayouter(50, 50);
             var rectSize = new Size(49, 49);
             for (int i = 0; i < 4; i++)
             {
-                var newRect =_layouter.PutNextRectangle(rectSize);
-                Assert.AreNotEqual(Rectangle.Empty, newRect, $"Empty rectangle on {i+1} iteration");
+                _layouter.PutNextRectangle(rectSize);
             }
             
             var noSpaceForThisRect = _layouter.PutNextRectangle(rectSize);

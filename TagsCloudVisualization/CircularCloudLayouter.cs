@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter: ICloudLayouter
     {
-        public Point Center { get; }
-
-        public Rectangle Maze { get; }
+        private readonly ILayouterAlgorithm algorithm;
 
         public List<Rectangle> Rectangles { get; }
 
-        public CircularCloudLayouter(Point center)
+        public Rectangle Maze { get; }
+
+        public Point Center { get; }
+
+        public CircularCloudLayouter(Point center, ILayouterAlgorithm algorithm)
         {
             if (center.X < 0 || center.Y < 0)
             {
                 throw new ArgumentException("Coordinates of center must be positive numbers", nameof(center));
             }
+            this.algorithm = algorithm;
             Center = center;
             Maze = CreateMaze(center);
             Rectangles = new List<Rectangle>();
@@ -33,7 +33,7 @@ namespace TagsCloudVisualization
                 throw new ArgumentException("Size is too big to fit maze", nameof(rectangleSize));
             }
 
-            var newRectangle = FindPlace(rectangleSize);
+            var newRectangle = algorithm.FindSpaceForRectangle(this, rectangleSize);
             if (newRectangle != Rectangle.Empty)
             {
                 Rectangles.Add(newRectangle);
@@ -47,42 +47,6 @@ namespace TagsCloudVisualization
             int height = center.Y * 2;
             int width = center.X * 2;
             return new Rectangle(0, 0, width, height);
-        }
-
-        private Rectangle FindPlace(Size rectangleSize)
-        {
-            bool hasSpace = true;
-            int radius = 0;
-            while (hasSpace)
-            {
-                for (int a = 0; a < 360; a++)
-                {
-                    var point = GetCoordinates(Center, a, radius);
-                    if (Maze.Contains(point) && !Rectangles.ContainsPoint(point))
-                    {
-                        var newRect = new Rectangle(point, rectangleSize);
-                        if (Maze.Contains(newRect) && !Rectangles.IntersectsWith(newRect))
-                        {
-                            return newRect;
-                        }
-                    }
-                }
-                hasSpace = radius < Maze.Height || radius < Maze.Width;
-                if (hasSpace)
-                {
-                    radius++;
-                }  
-            }
-            return Rectangle.Empty;
-        }
-
-        private Point GetCoordinates(Point center, int angle, int radius)
-        {
-            return new Point
-            {
-                X = (int) Math.Round(center.X + radius * Math.Cos(angle)),
-                Y = (int) Math.Round(center.Y + radius * Math.Sin(angle))
-            };
         }
     }
 }
