@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloudVisualization.Algorithms;
+using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization.Tests
 {

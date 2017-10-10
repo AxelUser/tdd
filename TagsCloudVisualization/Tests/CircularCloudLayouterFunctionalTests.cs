@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Drawing;
 using NUnit.Framework;
+using TagsCloudVisualization.Algorithms;
+using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization.Tests
 {

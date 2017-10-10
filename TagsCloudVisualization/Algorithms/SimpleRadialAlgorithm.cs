@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudVisualization.Layouters;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Algorithms
 {
     public class SimpleRadialAlgorithm : ILayouterAlgorithm
     {
