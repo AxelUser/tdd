@@ -71,6 +71,7 @@
     <Compile Include="Tests\Utils.cs" />
     <Compile Include="WordFormatters\IWordFormatter.cs" />
     <Compile Include="WordFormatters\SimpleWordFormatter.cs" />
+    <Compile Include="WordsNormalizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -8,9 +8,29 @@ namespace TagsCloudVisualization.WordFormatters
 {
     public class SimpleWordFormatter: IWordFormatter
     {
+        public List<string> StopWordsList { get; }
+
+        public SimpleWordFormatter()
+        {
+            StopWordsList = new List<string>();
+        }
+
+        public SimpleWordFormatter(IEnumerable<string> stopWordsList)
+        {
+            StopWordsList = stopWordsList.ToList();
+        }
+
         public string GetFormatted(string originalWord)
         {
-            return WhitespaceCropping(originalWord);
+            if (string.IsNullOrEmpty(originalWord))
+            {
+                return string.Empty;
+            }
+
+            var word = WhitespaceCropping(originalWord);
+            word = word.ToLower();
+            word = StopWordsList.Contains(word, StringComparer.OrdinalIgnoreCase) ? string.Empty : word;            
+            return word;
         }
 
         private string WhitespaceCropping(string originalWord)
