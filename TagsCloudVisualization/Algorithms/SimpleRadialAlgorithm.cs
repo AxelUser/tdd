@@ -17,7 +17,7 @@ namespace TagsCloudVisualization.Algorithms
 
         public Rectangle FindSpaceForRectangle(Rectangle maze, Point center, List<Rectangle> existingRectangles, Size rectangleSize)
         {
-            bool hasSpace = true;
+            bool hasSpace = maze.Contains(new Rectangle(maze.X, maze.Y, rectangleSize.Width, rectangleSize.Height));
             int radius = 0;
             int startAngle = useRandomAngle? Rnd.Next(0, 361): 0;
             while (hasSpace)

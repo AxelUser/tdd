@@ -48,10 +48,12 @@
     <Compile Include="Layouters\CircularCloudLayouter.cs" />
     <Compile Include="Readers\IWordsReader.cs" />
     <Compile Include="Readers\SimpleTxtReader.cs" />
+    <Compile Include="TagsCloudGenerator.cs" />
     <Compile Include="Tests\CircularCloudLayouterFunctionalTests.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="Layouters\ICloudLayouter.cs" />
     <Compile Include="Algorithms\ILayouterAlgorithm.cs" />
+    <Compile Include="Tests\SimpleRadialAlgorithmTests.cs" />
     <Compile Include="Visualization\MazeVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleListExtensions.cs" />
