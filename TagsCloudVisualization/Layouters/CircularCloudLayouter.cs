@@ -34,7 +34,7 @@ namespace TagsCloudVisualization.Layouters
                 throw new ArgumentException("Size is too big to fit maze", nameof(rectangleSize));
             }
 
-            var newRectangle = algorithm.FindSpaceForRectangle(this, rectangleSize);
+            var newRectangle = algorithm.FindSpaceForRectangle(Maze, Center, Rectangles, rectangleSize);
             if (newRectangle != Rectangle.Empty)
             {
                 Rectangles.Add(newRectangle);

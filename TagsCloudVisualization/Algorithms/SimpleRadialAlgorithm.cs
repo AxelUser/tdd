@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudVisualization.Layouters;
 
@@ -14,26 +15,26 @@ namespace TagsCloudVisualization.Algorithms
             this.useRandomAngle = useRandomAngle;
         }
 
-        public Rectangle FindSpaceForRectangle(ICloudLayouter layouter, Size rectangleSize)
+        public Rectangle FindSpaceForRectangle(Rectangle maze, Point center, List<Rectangle> existingRectangles, Size rectangleSize)
         {
             bool hasSpace = true;
             int radius = 0;
             int startAngle = useRandomAngle? Rnd.Next(0, 361): 0;
             while (hasSpace)
             {
-                for (int angleDelta = 0; angleDelta < 360; angleDelta++)
+                for (int angleOffset = 0; angleOffset < 360; angleOffset++)
                 {
-                    var point = GetCoordinates(layouter.Center, startAngle + angleDelta, radius);
-                    if (layouter.Maze.Contains(point) && !layouter.Rectangles.ContainsPoint(point))
+                    var point = GetCoordinates(center, startAngle + angleOffset, radius);
+                    if (maze.Contains(point) && !existingRectangles.ContainsPoint(point))
                     {
                         var newRect = new Rectangle(point, rectangleSize);
-                        if (layouter.Maze.Contains(newRect) && !layouter.Rectangles.IntersectsWith(newRect))
+                        if (maze.Contains(newRect) && !existingRectangles.IntersectsWith(newRect))
                         {
                             return newRect;
                         }
                     }
                 }
-                hasSpace = radius < layouter.Maze.Height || radius < layouter.Maze.Width;
+                hasSpace = radius < maze.Height || radius < maze.Width;
                 if (hasSpace)
                 {
                     radius++;
