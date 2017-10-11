@@ -20,6 +20,16 @@ namespace TagsCloudVisualization.WordFormatters
             StopWordsList = stopWordsList.ToList();
         }
 
+        private Func<string, string>[] GetFormattingSteps()
+        {
+            return new Func<string, string>[]
+            {
+                WhitespaceCropping,
+                word => word.ToLower(),
+                word => StopWordsList.Contains(word, StringComparer.OrdinalIgnoreCase) ? string.Empty : word
+            };
+        }
+
         public string GetFormatted(string originalWord)
         {
             if (string.IsNullOrEmpty(originalWord))
@@ -27,10 +37,7 @@ namespace TagsCloudVisualization.WordFormatters
                 return string.Empty;
             }
 
-            var word = WhitespaceCropping(originalWord);
-            word = word.ToLower();
-            word = StopWordsList.Contains(word, StringComparer.OrdinalIgnoreCase) ? string.Empty : word;            
-            return word;
+            return GetFormattingSteps().Aggregate(originalWord, (current, step) => step(current));
         }
 
         private string WhitespaceCropping(string originalWord)
