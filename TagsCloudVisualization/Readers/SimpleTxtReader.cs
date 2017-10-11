@@ -9,7 +9,7 @@ namespace TagsCloudVisualization.Readers
 {
     public class SimpleTxtReader: IWordsReader
     {
-        public string[] SupportedFileExtensions { get; } = {"txt"};
+        public string[] SupportedFileExtensions { get; } = {".txt"};
 
         public bool CanHandle(string filename)
         {

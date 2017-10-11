@@ -54,6 +54,7 @@
     <Compile Include="Layouters\ICloudLayouter.cs" />
     <Compile Include="Algorithms\ILayouterAlgorithm.cs" />
     <Compile Include="Tests\SimpleRadialAlgorithmTests.cs" />
+    <Compile Include="Tests\SimpleTxtReaderTests.cs" />
     <Compile Include="Visualization\MazeVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleListExtensions.cs" />
