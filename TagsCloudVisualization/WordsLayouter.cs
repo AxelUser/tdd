@@ -30,7 +30,7 @@ namespace TagsCloudVisualization
                 }
             }
 
-            wordsContainers.Sort((t1, t2) => t1.Item2 > t2.Item2 ? 1 : t1.Item2 < t2.Item2 ? -1 : 0);
+            wordsContainers.Sort((t1, t2) => t1.Item2 > t2.Item2 ? -1 : t1.Item2 < t2.Item2 ? 1 : 0);
             return wordsContainers;
         }
 
