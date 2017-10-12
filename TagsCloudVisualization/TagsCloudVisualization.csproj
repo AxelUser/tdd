@@ -72,7 +72,7 @@
     <Compile Include="Visualization\ILayoutPainter.cs" />
     <Compile Include="Visualization\MazeVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectangleListExtensions.cs" />
+    <Compile Include="Extensions\RectangleListExtensions.cs" />
     <Compile Include="Algorithms\SimpleRadialAlgorithm.cs" />
     <Compile Include="Tests\Utils.cs" />
     <Compile Include="Visualization\SimpleLayoutPainter.cs" />

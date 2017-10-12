@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization.Algorithms

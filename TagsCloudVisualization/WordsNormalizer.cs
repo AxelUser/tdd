@@ -21,9 +21,10 @@ namespace TagsCloudVisualization
         {            
             var formattedWords = RunAllFormatters(words);
 
-            int maxFrequency;
-            int minFrequency;
-            var wordsFrequencies = GetWordsFrequencies(formattedWords, out minFrequency, out maxFrequency);
+            var wordsFrequencies = GetWordsFrequencies(formattedWords);
+
+            int maxFrequency = wordsFrequencies.Values.Max();
+            int minFrequency = wordsFrequencies.Values.Min();
 
             return wordsFrequencies.ToDictionary(x => x.Key, x => GetFontSize(x.Value, minFrequency, maxFrequency));
         }
@@ -36,37 +37,21 @@ namespace TagsCloudVisualization
                 .ToList();
         }
 
-        private Dictionary<string, int> GetWordsFrequencies(IEnumerable<string> words, out int minFrequency, out int maxFrequency)
+        private Dictionary<string, int> GetWordsFrequencies(IEnumerable<string> words)
         {
             var frequencies = new Dictionary<string, int>();
-            int min = int.MaxValue;
-            int max = 0;
 
             foreach (var word in words)
             {
-                int currentFrequency;
-                if (!frequencies.TryGetValue(word, out currentFrequency))
+                if (!frequencies.ContainsKey(word))
                 {
-                    currentFrequency = 1;
+                    frequencies[word] = 1;
                 }
                 else
                 {
-                    currentFrequency++;
-                }
-
-                frequencies[word] = currentFrequency;
-
-                if (currentFrequency < min)
-                {
-                    min = currentFrequency;
-                }
-                else if(currentFrequency > max)
-                {
-                    max = currentFrequency;
+                    frequencies[word]++;
                 }
             }
-            minFrequency = min;
-            maxFrequency = max;
 
             return frequencies;
         }

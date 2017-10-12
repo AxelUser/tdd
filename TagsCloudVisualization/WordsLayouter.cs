@@ -17,13 +17,13 @@ namespace TagsCloudVisualization
             this.layouter = layouter;
         }
 
-        public Dictionary<string, Rectangle> GetWordsLayout(Dictionary<string, int> wordsSizes)
+        public Dictionary<string, Rectangle> GetWordsLayout(Dictionary<string, int> wordsSizes, int minFontSize = 0)
         {
             var wordsContainers = new Dictionary<string, Rectangle>();
 
             foreach (var wordSize in wordsSizes)
             {
-                var geoSize = GetSizeForWord(wordSize.Key, wordSize.Value);
+                var geoSize = GetSizeForWord(wordSize.Key, wordSize.Value < minFontSize ? minFontSize : wordSize.Value);
             }
 
             return wordsContainers;
