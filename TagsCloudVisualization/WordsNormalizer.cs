@@ -10,9 +10,9 @@ namespace TagsCloudVisualization
 {
     public class WordsNormalizer
     {
-        private readonly IWordFormatter[] wordFormatters;
+        private readonly IEnumerable<IWordFormatter> wordFormatters;
 
-        public WordsNormalizer(IWordFormatter[] wordFormatters)
+        public WordsNormalizer(IEnumerable<IWordFormatter> wordFormatters)
         {
             this.wordFormatters = wordFormatters;
         }

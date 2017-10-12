@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FakeItEasy.Sdk;
@@ -13,17 +15,17 @@ namespace TagsCloudVisualization
 {
     public class TagsCloudGenerator
     {
-        private ICloudLayouter cloudLayouter;
-        private IWordsReader wordsReader;
-        private WordsNormalizer normalizer;
-        private ILayoutPainter layoutPainter;
+        private readonly IWordsReader wordsReader;
+        private readonly WordsNormalizer normalizer;
+        private readonly ILayoutPainter layoutPainter;
+        private readonly WordsLayouter wordsLayouter;
 
-        public TagsCloudGenerator(ICloudLayouter cloudLayouter, IWordsReader wordsReader, WordsNormalizer normalizer, ILayoutPainter layoutPainter)
+        public TagsCloudGenerator(IWordsReader wordsReader, WordsNormalizer normalizer, ILayoutPainter layoutPainter, WordsLayouter wordsLayouter)
         {
-            this.cloudLayouter = cloudLayouter;
             this.wordsReader = wordsReader;
             this.normalizer = normalizer;
             this.layoutPainter = layoutPainter;
+            this.wordsLayouter = wordsLayouter;
         }
 
         public Bitmap CreateCloud(string inputFile, int width, int height)
@@ -34,12 +36,19 @@ namespace TagsCloudVisualization
             }
             var inputWords = wordsReader.GetAllWords(inputFile);
             var wordsSizes = normalizer.NormalizeToWordsSizes(inputWords);
-            return null;
+            var wordsContainers = wordsLayouter.GetWordsLayout(wordsSizes);
+            return layoutPainter.GetImage(wordsContainers, width, height);
         }
 
-        public void SaveCloud(string inputFile, int width, int height, string outputFile)
+        public void SaveCloud(string inputFile, int width, int height, string outputFile, ImageFormat format)
         {
             var image = CreateCloud(inputFile, width, height);
+            if (image == null)
+            {
+                throw new Exception("Could not create image");
+            }
+
+            image.Save(outputFile, format);
         }
     }
 }

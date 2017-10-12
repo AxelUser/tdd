@@ -10,7 +10,7 @@ namespace TagsCloudVisualization.Visualization
 {
     public class SimpleLayoutPainter: ILayoutPainter
     {
-        public Bitmap GetImage(Dictionary<string, Tuple<int, Rectangle>> wordContainers, int width, int height)
+        public Bitmap GetImage(List<Tuple<string, int, Rectangle>> wordContainers, int width, int height)
         {
             var bitmap = new Bitmap(width, height);
 
@@ -19,9 +19,9 @@ namespace TagsCloudVisualization.Visualization
 	            graphics.FillRectangle(Brushes.Azure, new Rectangle(Point.Empty, new Size(width, height)));
                 foreach (var wordContainer in wordContainers)
                 {
-					var font = new Font("Arial", wordContainer.Value.Item1);
-                    graphics.DrawString(wordContainer.Key, font, Brushes.Black, wordContainer.Value.Item2);
-                    graphics.DrawRectangle(Pens.Gray, wordContainer.Value.Item2);
+					var font = new Font("Arial", wordContainer.Item2);
+                    graphics.DrawString(wordContainer.Item1, font, Brushes.Black, wordContainer.Item3);
+                    graphics.DrawRectangle(Pens.Gray, wordContainer.Item3);
                 }
             }
             return bitmap;

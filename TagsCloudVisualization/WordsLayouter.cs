@@ -17,9 +17,9 @@ namespace TagsCloudVisualization
             this.layouter = layouter;
         }
 
-        public Dictionary<string, Tuple<int, Rectangle>> GetWordsLayout(Dictionary<string, int> wordsSizes, int minFontSize = 0)
+        public List<Tuple<string, int, Rectangle>> GetWordsLayout(Dictionary<string, int> wordsSizes, int minFontSize = 0)
         {
-            var wordsContainers = new Dictionary<string, Tuple<int, Rectangle>>();
+            var wordsContainers = new List<Tuple<string, int, Rectangle>>();
 
             foreach (var wordSize in wordsSizes)
             {
@@ -29,10 +29,11 @@ namespace TagsCloudVisualization
                 var rect = layouter.PutNextRectangle(geoSize);
                 if (!rect.IsEmpty)
                 {
-                    wordsContainers.Add(wordSize.Key, Tuple.Create(fontSize, rect));
+                    wordsContainers.Add(Tuple.Create(wordSize.Key, fontSize, rect));
                 }
             }
 
+            wordsContainers.Sort((t1, t2) => t1.Item2 > t2.Item2 ? 1 : t1.Item2 < t2.Item2 ? -1 : 0);
             return wordsContainers;
         }
 

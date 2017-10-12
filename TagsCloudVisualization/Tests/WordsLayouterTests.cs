@@ -43,7 +43,7 @@ namespace TagsCloudVisualization.Tests
         [Test]
         public void GetWordsLayout_PassWords_AddedToDictionary()
         {
-	        wordsLayouter.GetWordsLayout(sampleWordsSizes).Keys
+	        wordsLayouter.GetWordsLayout(sampleWordsSizes).Select(t=>t.Item1)
 		        .Should().BeEquivalentTo(sampleWordsSizes.Keys);
         }
 
