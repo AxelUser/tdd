@@ -68,6 +68,7 @@
     <Compile Include="Tests\SimpleRadialAlgorithmTests.cs" />
     <Compile Include="Tests\SimpleTxtReaderTests.cs" />
     <Compile Include="Tests\SimpleWordFormatterTests.cs" />
+    <Compile Include="Tests\WordsLayouterTests.cs" />
     <Compile Include="Tests\WordsNormalizerTests.cs" />
     <Compile Include="Visualization\ILayoutPainter.cs" />
     <Compile Include="Visualization\MazeVisualizer.cs" />

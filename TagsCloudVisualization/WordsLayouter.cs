@@ -10,7 +10,7 @@ namespace TagsCloudVisualization
 {
     public class WordsLayouter
     {
-        private ICloudLayouter layouter;
+        private readonly ICloudLayouter layouter;
 
         public WordsLayouter(ICloudLayouter layouter)
         {
@@ -26,7 +26,10 @@ namespace TagsCloudVisualization
                 var geoSizeF = GetSizeForWord(wordSize.Key, wordSize.Value < minFontSize ? minFontSize : wordSize.Value);
                 var geoSize = Size.Round(geoSizeF);
                 var rect = layouter.PutNextRectangle(geoSize);
-                //if(rect != )
+                if (!rect.IsEmpty)
+                {
+                    wordsContainers.Add(wordSize.Key, rect);
+                }
             }
 
             return wordsContainers;
