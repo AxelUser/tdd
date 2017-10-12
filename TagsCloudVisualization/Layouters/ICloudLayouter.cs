@@ -10,5 +10,7 @@ namespace TagsCloudVisualization.Layouters
         Rectangle Maze { get; }
 
         Point Center { get; }
+
+        Rectangle PutNextRectangle(Size rectangleSize);
     }
 }

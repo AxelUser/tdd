@@ -23,7 +23,10 @@ namespace TagsCloudVisualization
 
             foreach (var wordSize in wordsSizes)
             {
-                var geoSize = GetSizeForWord(wordSize.Key, wordSize.Value < minFontSize ? minFontSize : wordSize.Value);
+                var geoSizeF = GetSizeForWord(wordSize.Key, wordSize.Value < minFontSize ? minFontSize : wordSize.Value);
+                var geoSize = Size.Round(geoSizeF);
+                var rect = layouter.PutNextRectangle(geoSize);
+                //if(rect != )
             }
 
             return wordsContainers;

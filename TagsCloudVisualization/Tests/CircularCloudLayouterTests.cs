@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.Algorithms;
@@ -76,11 +77,11 @@ namespace TagsCloudVisualization.Tests
         }
 
         [Test]
-        public void PutNextRectangle_AddBigRectangle_ThrowsException()
+        public void PutNextRectangle_AddBigRectangle_ReturnEmptyRectangle()
         {
             _layouter = CreateCircularCloudLayouter(50, 50);
             var rectSize = new Size(250, 250);
-            Assert.Throws<ArgumentException>(() => _layouter.PutNextRectangle(rectSize));
+            _layouter.PutNextRectangle(rectSize).Should().Be(Rectangle.Empty);
         }
 
         [Test]
