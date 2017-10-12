@@ -73,7 +73,9 @@ namespace TagsCloudVisualization
 
         private int GetFontSize(int frequency, int minFrequency, int maxFrequency)
         {
-            return maxFrequency * (frequency - minFrequency) / (maxFrequency - minFrequency);
+            return frequency > minFrequency
+                ? maxFrequency * (frequency - minFrequency) / (maxFrequency - minFrequency)
+                : 1;
         }
     }
 }
