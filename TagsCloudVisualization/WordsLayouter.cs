@@ -17,18 +17,19 @@ namespace TagsCloudVisualization
             this.layouter = layouter;
         }
 
-        public Dictionary<string, Rectangle> GetWordsLayout(Dictionary<string, int> wordsSizes, int minFontSize = 0)
+        public Dictionary<string, Tuple<int, Rectangle>> GetWordsLayout(Dictionary<string, int> wordsSizes, int minFontSize = 0)
         {
-            var wordsContainers = new Dictionary<string, Rectangle>();
+            var wordsContainers = new Dictionary<string, Tuple<int, Rectangle>>();
 
             foreach (var wordSize in wordsSizes)
             {
-                var geoSizeF = GetSizeForWord(wordSize.Key, wordSize.Value < minFontSize ? minFontSize : wordSize.Value);
+                var fontSize = wordSize.Value < minFontSize ? minFontSize : wordSize.Value;
+                var geoSizeF = GetSizeForWord(wordSize.Key, fontSize);
                 var geoSize = Size.Round(geoSizeF);
                 var rect = layouter.PutNextRectangle(geoSize);
                 if (!rect.IsEmpty)
                 {
-                    wordsContainers.Add(wordSize.Key, rect);
+                    wordsContainers.Add(wordSize.Key, Tuple.Create(fontSize, rect));
                 }
             }
 

@@ -10,6 +10,6 @@ namespace TagsCloudVisualization.Visualization
 {
     public interface ILayoutPainter
     {
-        Bitmap GetImage();
+        Bitmap GetImage(Dictionary<string, Tuple<int, Rectangle>> wordContainers, int width, int height);
     }
 }
