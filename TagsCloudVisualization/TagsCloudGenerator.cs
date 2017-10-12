@@ -29,8 +29,9 @@ namespace TagsCloudVisualization
             }
             var inputWords = wordsReader.GetAllWords(inputFile);
             var wordsSizes = normalizer.NormalizeToWordsSizes(inputWords);
-            var wordsContainers = wordsLayouter.GetWordsLayout(wordsSizes);
-            return layoutPainter.GetImage(wordsContainers, width, height);
+            Rectangle maze;
+            var wordsContainers = wordsLayouter.GetWordsLayout(wordsSizes, out maze);
+            return layoutPainter.GetImage(wordsContainers, maze.Width, maze.Height);
         }
 
         public void SaveCloud(string inputFile, int width, int height, string outputFile, ImageFormat format)

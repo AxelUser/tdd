@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.Algorithms
 {
     public interface ILayouterAlgorithm
     {
-        Rectangle FindSpaceForRectangle(Rectangle maze, Point center, List<Rectangle> existingRectangles, Size rectangleSize);
+        Rectangle FindSpaceForRectangle(Point center, List<Rectangle> existingRectangles, Size rectangleSize);
     }
 }

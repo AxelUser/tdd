@@ -12,7 +12,7 @@ namespace TagsCloudVisualization.Visualization
             using (var graphics = Graphics.FromImage(bitmap))
             {
                 graphics.FillRectangle(Brushes.Azure, layouter.Maze);
-                foreach (var rectangle in layouter.Rectangles)
+                foreach (var rectangle in layouter.NormalizedRectangles)
                 {
                     graphics.FillRectangle(Brushes.DarkGoldenrod, rectangle);
                     graphics.DrawRectangle(Pens.LightSalmon, rectangle);

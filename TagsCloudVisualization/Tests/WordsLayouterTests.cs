@@ -40,7 +40,8 @@ namespace TagsCloudVisualization.Tests
         [Test]
         public void GetWordsLayout_PassWords_AddedToDictionary()
         {
-	        wordsLayouter.GetWordsLayout(sampleWordsSizes).Select(t=>t.Item1)
+            Rectangle maze;
+	        wordsLayouter.GetWordsLayout(sampleWordsSizes, out maze).Select(t=>t.Item1)
 		        .Should().BeEquivalentTo(sampleWordsSizes.Keys);
         }
 
@@ -48,8 +49,8 @@ namespace TagsCloudVisualization.Tests
 	    public void GetWordsLayout_PassWords_DoNotAddVeryBigWords()
 	    {
 		    A.CallTo(() => fakeLayouter.PutNextRectangle(A<Size>.Ignored)).Returns(Rectangle.Empty).Once();
-
-		    wordsLayouter.GetWordsLayout(sampleWordsSizes).Should().HaveCount(sampleWordsSizes.Count - 1);
+	        Rectangle maze;
+            wordsLayouter.GetWordsLayout(sampleWordsSizes, out maze).Should().HaveCount(sampleWordsSizes.Count - 1);
 	    }
 	}
 }

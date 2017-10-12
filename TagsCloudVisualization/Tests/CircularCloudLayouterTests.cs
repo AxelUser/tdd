@@ -40,20 +40,12 @@ namespace TagsCloudVisualization.Tests
             Assert.AreEqual(cloud.Center, center);
         }
 
-        [TestCase(-8, -10)]
-        [TestCase(8, -10)]
-        [TestCase(-8, 10)]
-        public void Ctor_CenterWithNegCoors_ThrowsException(int x, int y)
-        {
-            Assert.Throws<ArgumentException>(() => CreateCircularCloudLayouter(x, y));
-        }
-
         [TestCase(8, 10)]
         public void Ctor_CreateMaze_CorrectSizes(int x, int y)
         {
             _layouter = CreateCircularCloudLayouter(x, y);
-            Assert.AreEqual(y * 2, _layouter.Maze.Height);
-            Assert.AreEqual(x * 2, _layouter.Maze.Width);
+            _layouter.PutNextRectangle(new Size(100, 200)).Should().Be(_layouter.Maze);
+
         }
 
         [Test]
@@ -77,14 +69,6 @@ namespace TagsCloudVisualization.Tests
         }
 
         [Test]
-        public void PutNextRectangle_AddBigRectangle_ReturnEmptyRectangle()
-        {
-            _layouter = CreateCircularCloudLayouter(50, 50);
-            var rectSize = new Size(250, 250);
-            _layouter.PutNextRectangle(rectSize).Should().Be(Rectangle.Empty);
-        }
-
-        [Test]
         public void PutNextRectangle_AddToRectangles_MustNotCollide()
         {
             _layouter = CreateCircularCloudLayouter(250, 250);
@@ -93,21 +77,6 @@ namespace TagsCloudVisualization.Tests
             var sec = _layouter.PutNextRectangle(rectSize);
 
             Assert.IsFalse(first.IntersectsWith(sec), "Rectangles must not overlap");
-        }
-
-        [Test]
-        public void PutNextRectangle_TooMuchRectangles_DoNotAdd()
-        {
-            _layouter = CreateCircularCloudLayouter(50, 50);
-            var rectSize = new Size(49, 49);
-            for (int i = 0; i < 4; i++)
-            {
-                _layouter.PutNextRectangle(rectSize);
-            }
-            
-            var noSpaceForThisRect = _layouter.PutNextRectangle(rectSize);
-            Assert.AreEqual(4, _layouter.Rectangles.Count);
-            Assert.AreEqual(Rectangle.Empty, noSpaceForThisRect);
         }
     }
 }

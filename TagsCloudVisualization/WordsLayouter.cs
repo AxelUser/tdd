@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization
@@ -14,24 +15,25 @@ namespace TagsCloudVisualization
             this.layouter = layouter;
         }
 
-        public List<Tuple<string, int, Rectangle>> GetWordsLayout(Dictionary<string, int> wordsSizes, int minFontSize = 0)
+        public List<Tuple<string, int, Rectangle>> GetWordsLayout(Dictionary<string, int> wordsSizes, out Rectangle maze, int minFontSize = 0)
         {
-            var wordsContainers = new List<Tuple<string, int, Rectangle>>();
+            var sizesTuples = wordsSizes.Select(s => Tuple.Create(s.Key, s.Value)).ToList();
 
-            foreach (var wordSize in wordsSizes)
+            sizesTuples.Sort((t1, t2) => t1.Item2 > t2.Item2 ? -1 : t1.Item2 < t2.Item2 ? 1 : 0);
+
+            foreach (var tuple in sizesTuples)
             {
-                var fontSize = wordSize.Value < minFontSize ? minFontSize : wordSize.Value;
-                var geoSizeF = GetSizeForWord(wordSize.Key, fontSize);
+                var fontSize = tuple.Item2 < minFontSize ? minFontSize : tuple.Item2;
+                var geoSizeF = GetSizeForWord(tuple.Item1, fontSize);
                 var geoSize = Size.Round(geoSizeF);
-                var rect = layouter.PutNextRectangle(geoSize);
-                if (!rect.IsEmpty)
-                {
-                    wordsContainers.Add(Tuple.Create(wordSize.Key, fontSize, rect));
-                }
+                layouter.PutNextRectangle(geoSize);
             }
+            var wordsContainer =
+                layouter.NormalizedRectangles.Zip(sizesTuples, (rct, tp) => Tuple.Create(tp.Item1, tp.Item2, rct))
+                    .ToList();
 
-            wordsContainers.Sort((t1, t2) => t1.Item2 > t2.Item2 ? -1 : t1.Item2 < t2.Item2 ? 1 : 0);
-            return wordsContainers;
+            maze = layouter.Maze;
+            return wordsContainer;
         }
 
         private SizeF GetSizeForWord(string word, int fontSize)

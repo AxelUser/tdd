@@ -15,32 +15,26 @@ namespace TagsCloudVisualization.Algorithms
             this.useRandomAngle = useRandomAngle;
         }
 
-        public Rectangle FindSpaceForRectangle(Rectangle maze, Point center, List<Rectangle> existingRectangles, Size rectangleSize)
+        public Rectangle FindSpaceForRectangle(Point center, List<Rectangle> existingRectangles, Size rectangleSize)
         {
-            bool hasSpace = maze.Contains(new Rectangle(maze.X, maze.Y, rectangleSize.Width, rectangleSize.Height));
             int radius = 0;
             int startAngle = useRandomAngle? Rnd.Next(0, 361): 0;
-            while (hasSpace)
+            while (true)
             {
                 for (int angleOffset = 0; angleOffset < 360; angleOffset++)
                 {
                     var point = GetCoordinates(center, startAngle + angleOffset, radius);
-                    if (maze.Contains(point) && !existingRectangles.ContainsPoint(point))
+                    if (!existingRectangles.ContainsPoint(point))
                     {
-                        var newRect = new Rectangle(point, rectangleSize);
-                        if (maze.Contains(newRect) && !existingRectangles.IntersectsWith(newRect))
+                        var newRect = CreateRectangle(point, rectangleSize);
+                        if (!existingRectangles.IntersectsWith(newRect))
                         {
                             return newRect;
                         }
                     }
                 }
-                hasSpace = radius < maze.Height || radius < maze.Width;
-                if (hasSpace)
-                {
-                    radius++;
-                }
+                radius++;
             }
-            return Rectangle.Empty;
         }
 
         private Point GetCoordinates(Point center, int angle, int radius)
@@ -50,6 +44,12 @@ namespace TagsCloudVisualization.Algorithms
                 X = (int)Math.Round(center.X + radius * Math.Cos(angle)),
                 Y = (int)Math.Round(center.Y + radius * Math.Sin(angle))
             };
+        }
+
+        private Rectangle CreateRectangle(Point center, Size size)
+        {
+            var topLeft = new Point(center.X - size.Width / 2, center.Y - size.Height / 2);
+            return new Rectangle(topLeft, size);
         }
     }
 }

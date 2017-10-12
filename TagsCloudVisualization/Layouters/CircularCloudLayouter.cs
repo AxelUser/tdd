@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudVisualization.Algorithms;
 
 namespace TagsCloudVisualization.Layouters
@@ -11,25 +12,30 @@ namespace TagsCloudVisualization.Layouters
 
         public List<Rectangle> Rectangles { get; }
 
-        public Rectangle Maze { get; }
+        public List<Rectangle> NormalizedRectangles => GetNormalizedRectangles();
+
+        private List<Rectangle> GetNormalizedRectangles()
+        {
+            var maze = Maze;
+            var xStride = -maze.X;
+            var yStride = -maze.Y;
+            return Rectangles.Select(r => new Rectangle(r.X + xStride, r.Y + yStride, r.Width, r.Height)).ToList();
+        }
+
+        public Rectangle Maze => GetMaze();
 
         public Point Center { get; }
 
         public CircularCloudLayouter(Point center, ILayouterAlgorithm algorithm)
         {
-            if (center.X < 0 || center.Y < 0)
-            {
-                throw new ArgumentException("Coordinates of center must be positive numbers", nameof(center));
-            }
             this.algorithm = algorithm;
             Center = center;
-            Maze = CreateMaze(center);
             Rectangles = new List<Rectangle>();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            var newRectangle = algorithm.FindSpaceForRectangle(Maze, Center, Rectangles, rectangleSize);
+            var newRectangle = algorithm.FindSpaceForRectangle(Center, Rectangles, rectangleSize);
             if (newRectangle != Rectangle.Empty)
             {
                 Rectangles.Add(newRectangle);
@@ -38,11 +44,18 @@ namespace TagsCloudVisualization.Layouters
             return newRectangle;
         }
 
-        private Rectangle CreateMaze(Point center)
+        private Rectangle GetMaze()
         {
-            int height = center.Y * 2;
-            int width = center.X * 2;
-            return new Rectangle(0, 0, width, height);
+            if (!Rectangles.Any())
+            {
+                return Rectangle.Empty;
+            }
+
+            var top = Rectangles.Min(rectangle => rectangle.Top);
+            var bottom = Rectangles.Max(rectangle => rectangle.Bottom);
+            var left = Rectangles.Min(rectangle => rectangle.Left);
+            var right = Rectangles.Max(rectangle => rectangle.Right);
+            return new Rectangle(left, top, Math.Abs(right - left), Math.Abs(bottom - top));
         }
     }
 }

@@ -7,6 +7,8 @@ namespace TagsCloudVisualization.Layouters
     {
         List<Rectangle> Rectangles { get; }
 
+        List<Rectangle> NormalizedRectangles { get; }
+
         Rectangle Maze { get; }
 
         Point Center { get; }
