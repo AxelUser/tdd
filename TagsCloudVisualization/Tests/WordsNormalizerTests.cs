@@ -41,7 +41,7 @@ namespace TagsCloudVisualization.Tests
         public void NormalizeToWordsSizes_PassWords_FormatterWillRunForEach()
         {
             var words = new[] {"css", "css", "html"};
-            wordsSizes = normalizer.NormalizeToWordsSizes(words);
+            wordsSizes = normalizer.NormalizeToWordsWeights(words);
 
             A.CallTo(() => fakeWordFormatter.GetFormatted(A<string>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Times(words.Length));
@@ -51,7 +51,7 @@ namespace TagsCloudVisualization.Tests
         public void NormalizeToWordsSizes_PassWords_AddWordsToDictionary()
         {
             var words = new[] { "css", "css", "css", "css", "css", "css", "html", "html" };
-            wordsSizes = normalizer.NormalizeToWordsSizes(words);
+            wordsSizes = normalizer.NormalizeToWordsWeights(words);
 
             wordsSizes.Keys.Select(x => x).Should().BeEquivalentTo("css", "html");
         }
@@ -60,7 +60,7 @@ namespace TagsCloudVisualization.Tests
         public void NormalizeToWordsSizes_PassWords_GetBiggestSizeForPopularWord()
         {
             var words = new[] { "css", "css", "css", "css", "css", "css", "html", "html" };
-            wordsSizes = normalizer.NormalizeToWordsSizes(words);
+            wordsSizes = normalizer.NormalizeToWordsWeights(words);
 
             wordsSizes["css"].Should().BeGreaterThan(wordsSizes["html"]);
         }
@@ -70,7 +70,7 @@ namespace TagsCloudVisualization.Tests
         public void NormalizeToWordsSizes_PassNotRepeatedWords_GetEqualSizes()
         {
             var words = new[] { "css", "wpf", "csharp", "dotnet", "windows", "chrome", "markdown", "html" };
-            wordsSizes = normalizer.NormalizeToWordsSizes(words);
+            wordsSizes = normalizer.NormalizeToWordsWeights(words);
 
             var sampleSize = wordsSizes["css"];
             Assert.IsTrue(wordsSizes.Values.All(i => i == sampleSize));

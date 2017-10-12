@@ -78,6 +78,7 @@
     <Compile Include="Visualization\SimpleLayoutPainter.cs" />
     <Compile Include="WordFormatters\IWordFormatter.cs" />
     <Compile Include="WordFormatters\SimpleWordFormatter.cs" />
+    <Compile Include="WordsLayouter.cs" />
     <Compile Include="WordsNormalizer.cs" />
   </ItemGroup>
   <ItemGroup>
