@@ -69,11 +69,13 @@
     <Compile Include="Tests\SimpleTxtReaderTests.cs" />
     <Compile Include="Tests\SimpleWordFormatterTests.cs" />
     <Compile Include="Tests\WordsNormalizerTests.cs" />
+    <Compile Include="Visualization\ILayoutPainter.cs" />
     <Compile Include="Visualization\MazeVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleListExtensions.cs" />
     <Compile Include="Algorithms\SimpleRadialAlgorithm.cs" />
     <Compile Include="Tests\Utils.cs" />
+    <Compile Include="Visualization\SimpleLayoutPainter.cs" />
     <Compile Include="WordFormatters\IWordFormatter.cs" />
     <Compile Include="WordFormatters\SimpleWordFormatter.cs" />
     <Compile Include="WordsNormalizer.cs" />
