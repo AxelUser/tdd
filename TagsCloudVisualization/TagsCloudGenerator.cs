@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using FakeItEasy.Sdk;
-using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Readers;
 using TagsCloudVisualization.Visualization;
 
