@@ -1,0 +1,1 @@
+.\bin\Debug\TagsCloudVisualization.ConsoleApp.exe -i GetImage_ReturnsCorrectImage_f3f2d16e0252411e9b7cc634e6f3e319.txt

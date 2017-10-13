@@ -34,7 +34,7 @@ namespace TagsCloudVisualization
             return layoutPainter.GetImage(wordsContainers, maze.Width, maze.Height);
         }
 
-        public void SaveCloud(string inputFile, int width, int height, string outputFile, ImageFormat format)
+        public void SaveCloud(string inputFile, int width, int height, string outputFile, ImageExtensions format)
         {
             var image = CreateCloud(inputFile, width, height);
             if (image == null)
@@ -42,7 +42,16 @@ namespace TagsCloudVisualization
                 throw new Exception("Could not create image");
             }
 
-            image.Save(outputFile, format);
+            image.Save(outputFile, GetImageFormat(format));
+        }
+
+        private ImageFormat GetImageFormat(ImageExtensions ext)
+        {
+            switch (ext)
+            {
+                case ImageExtensions.Png: return ImageFormat.Png;
+                default: return ImageFormat.Png;
+            }
         }
     }
 }

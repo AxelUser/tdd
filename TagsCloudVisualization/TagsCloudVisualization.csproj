@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageExtensions.cs" />
     <Compile Include="Layouters\CircularCloudLayouter.cs" />
     <Compile Include="Readers\IWordsReader.cs" />
     <Compile Include="Readers\SimpleTxtReader.cs" />

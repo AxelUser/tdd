@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace TagsCloudVisualization.WordFormatters
 {
@@ -23,7 +24,8 @@ namespace TagsCloudVisualization.WordFormatters
             return new Func<string, string>[]
             {
                 WhitespaceCropping,
-                word => word.ToLower(),
+                word => Regex.Replace(word, "[_+.,!@#$^*();\\\\/|<>\"\']+", String.Empty),
+                word => word.ToLower(),                
                 word => StopWordsList.Contains(word, StringComparer.OrdinalIgnoreCase) ? string.Empty : word
             };
         }

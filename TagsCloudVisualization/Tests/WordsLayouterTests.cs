@@ -32,6 +32,8 @@ namespace TagsCloudVisualization.Tests
             fakeLayouter = A.Fake<ICloudLayouter>();
             A.CallTo(() => fakeLayouter.PutNextRectangle(A<Size>.Ignored))
                 .ReturnsLazily((Size size) => new Rectangle(Point.Empty, size));
+            A.CallTo(() => fakeLayouter.NormalizedRectangles)
+                .Returns(Enumerable.Repeat(Rectangle.Empty, sampleWordsSizes.Count).ToList());
 
             wordsLayouter = new WordsLayouter(fakeLayouter);
         }
@@ -44,13 +46,5 @@ namespace TagsCloudVisualization.Tests
 	        wordsLayouter.GetWordsLayout(sampleWordsSizes, out maze).Select(t=>t.Item1)
 		        .Should().BeEquivalentTo(sampleWordsSizes.Keys);
         }
-
-	    [Test]
-	    public void GetWordsLayout_PassWords_DoNotAddVeryBigWords()
-	    {
-		    A.CallTo(() => fakeLayouter.PutNextRectangle(A<Size>.Ignored)).Returns(Rectangle.Empty).Once();
-	        Rectangle maze;
-            wordsLayouter.GetWordsLayout(sampleWordsSizes, out maze).Should().HaveCount(sampleWordsSizes.Count - 1);
-	    }
 	}
 }

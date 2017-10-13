@@ -45,7 +45,7 @@ namespace TagsCloudVisualization.Tests
         [TearDown]
         public void TearDown()
         {
-            DeleteFile(inputFile);
+            //DeleteFile(inputFile);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace TagsCloudVisualization.Tests
         {
             var ctx = TestContext.CurrentContext;
             outputFile = Path.Combine(ctx.TestDirectory, "TestFiles", $"{ctx.Test.Name}_{Guid.NewGuid():N}.png");
-            generator.SaveCloud(inputFile, 2048, 2048, outputFile, ImageFormat.Png);
+            generator.SaveCloud(inputFile, 2048, 2048, outputFile, ImageExtensions.Png);
         }
 
         private string CreateInputFile()
