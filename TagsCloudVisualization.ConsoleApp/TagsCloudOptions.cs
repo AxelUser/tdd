@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommandLine;
+﻿using CommandLine;
 
 namespace TagsCloudVisualization.ConsoleApp
 {
@@ -21,7 +16,7 @@ namespace TagsCloudVisualization.ConsoleApp
         [Option('o', "outputFile", Required = false, HelpText = "Output file with words for tags cloud")]
         public string OutputFile { get; set; }
 
-        [Option('f', Default = ImageExtensions.Png)]
+        [Option('f', "format", HelpText = "Format for output image", Default = ImageExtensions.Png)]
         public ImageExtensions Format { get; set; }
     }
 }
