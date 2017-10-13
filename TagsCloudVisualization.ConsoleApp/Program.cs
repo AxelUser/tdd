@@ -34,17 +34,6 @@ namespace TagsCloudVisualization.ConsoleApp
             return container.GetInstance<TagsCloudGenerator>();
         }
 
-        //private static TagsCloudOptions GetOptions(string[] args)
-        //{
-            
-        //    //return new TagsCloudOptions
-        //    //{
-        //    //    Format = ImageExtensions.Png,
-        //    //    InputFile = "GetImage_ReturnsCorrectImage_f3f2d16e0252411e9b7cc634e6f3e319.txt",
-        //    //    OutputFile = $"{Guid.NewGuid():N}.png"
-        //    //};
-        //}
-
         static void Main(string[] args)
         {
             var generator = CreateGenerator();
